@@ -5,6 +5,9 @@ router.get("/", (req, res, next) => {
 });
 
 //Experiences routes
+const authRoutes = require("./auth.routes")
+router.use("/auth", authRoutes)
+
 const experienceRoutes = require("./experience.routes")
 router.use("/experience", experienceRoutes)
 
