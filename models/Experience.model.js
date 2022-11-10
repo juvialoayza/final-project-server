@@ -1,4 +1,6 @@
 const { Schema, model } = require("mongoose");
+const placesList = require("../utils/placesList")
+
 
 const experienceSchema = new Schema(
     {
@@ -16,7 +18,7 @@ const experienceSchema = new Schema(
         ],
         place: {
             type:String,
-            enum:["Alicante", "Madrid", "Valencia", "Barcelona"]
+            enum: placesList
         },
         price: Number,
         duration: {

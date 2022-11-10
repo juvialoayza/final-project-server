@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Experience = require("../models/Experience.model")
 
-//GET "/api/experienceList" => Ruta para obtener todas las experiencias de la BD
+//GET "/api/experiences/experienceList" => Ruta para obtener todas las experiencias de la BD
 router.get("/experienceList", async (req, res, next) => {
     try {
         const response = await Experience.find().select("title", "place")
@@ -11,7 +11,7 @@ router.get("/experienceList", async (req, res, next) => {
     }
 })
 
-//POST "/api/experienceCreate" => REcibe datos para crear una nueva experiencia en la BD
+//POST "/api/experiences/experienceCreate" => REcibe datos para crear una nueva experiencia en la BD
 router.post("/experienceCreate", async (req, res, next) => {
     console.log(req.body)
 
