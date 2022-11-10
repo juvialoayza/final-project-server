@@ -9,7 +9,7 @@ const authRoutes = require("./auth.routes")
 router.use("/auth", authRoutes)
 
 const experienceRoutes = require("./experience.routes")
-router.use("/experience", experienceRoutes)
+router.use("/experiences", experienceRoutes)
 
 
 
