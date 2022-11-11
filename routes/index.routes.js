@@ -8,6 +8,13 @@ router.get("/", (req, res, next) => {
 const experienceRoutes = require("./experience.routes")
 router.use("/experiences", experienceRoutes)
 
+// //Places routes
+// const placesRoutes = require("./places.routes")
+// router.use("/places", placesRoutes)
+
+//Itinerary routes
+const itineraryRoutes = require("./itinerary.routes")
+router.use("/itinerary", itineraryRoutes)
 
 
 
