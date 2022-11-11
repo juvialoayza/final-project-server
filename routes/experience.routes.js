@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const Experience = require("../models/Experience.model")
+const jwt = require("jsonwebtoken")
+
 
 //GET "/api/experience" => Ruta para obtener todas las experiencias de la BD
 router.get("/", async (req, res, next) => {
@@ -65,6 +67,15 @@ router.delete("/:experienceId", async (req, res, next) => {
     try {
       await Experience.findByIdAndDelete(req.params.experienceId)
       res.status(200).json("Experiencia borrada")
+    } catch(error) {
+        next(error)
+    }
+})
+
+//GET "/api/experiences/:experienceId" => Agregar experiencias a la propiedad favoritos del modelo usuario
+router.get("/:experienceId", async (req, res, next) => {
+    try {
+
     } catch(error) {
         next(error)
     }
