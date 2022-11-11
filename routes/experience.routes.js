@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Experience = require("../models/Experience.model")
 const jwt = require("jsonwebtoken")
+const isAuthenticated = require("../middlewares/auth.middlewares");
+const User = require("../models/User.model");
 
 
 //GET "/api/experience" => Ruta para obtener todas las experiencias de la BD
@@ -52,7 +54,7 @@ router.patch("/:experienceId", async (req, res, next) => {
     }
 })
 
-//GET "/api/experiences/:experienceId" => Buscar datos de una experiencia en la BD por su id
+//GET "/api/experiences/:experienceId" => Buscar y mostrar detalles de una experiencia por su id
 router.get("/:experienceId", async (req, res, next) => {
     try {
       const response = await Experience.findById(req.params.experienceId)
@@ -72,13 +74,19 @@ router.delete("/:experienceId", async (req, res, next) => {
     }
 })
 
-//GET "/api/experiences/:experienceId" => Agregar experiencias a la propiedad favoritos del modelo usuario
-router.get("/:experienceId", async (req, res, next) => {
+//PATCH "/api/experiences/:experienceId" => Agregar experiencias a la propiedad favoritos del modelo usuario
+router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
     try {
-
+      console.log(req.payload)
+      await User.findByIdAndUpdate(req.payload._id, {
+        $addToSet: {favorites: req.params.experienceId},
+      })
+      res.status(200).json("Experiencia agregada a favoritos")
     } catch(error) {
         next(error)
     }
 })
+
+//Hacer ruta para remover propiedades de favoritos
 
 module.exports = router
