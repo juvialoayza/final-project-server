@@ -1,6 +1,8 @@
 const router = require("express").Router();
-const User = require('../models/User.model')
-const bcrypt= require("bcryptjs")
+const User = require('../models/User.model');
+const bcrypt= require("bcryptjs");
+const jwt=require("jsonwebtoken");
+const isAuthenticated=require("../middlewares/auth.middlewares")
 
 //POST "/api/auth/signup" => registro de usuario
 router.post("/signup", async (req, res, next)=> {
@@ -81,21 +83,38 @@ router.post("/login", async(req,res,next)=> {
     }
 
     //2. creación de sesión (TOKEN) y enviarlo al cliente
+    const payload = {
+        _id: foundUser._id,
+        firstName:foundUser.firstName,
+        lastName:foundUser.lastName,
+        email: foundUser.email,
+        role: foundUser.role,
+    }
 
-    
+    const authToken = jwt.sign(
+        payload,
+        process.env.TOKEN_SECRET,
+        {algorithm: "HS256", expiresIn: "4h"}
+
+    )
+
+    res.status(200).json({authToken: authToken})
 
 
 }catch(error){
     next(error)
 }
 
-res.status(200).json("todo bien por aquí")
     
 })
 
 
 
 //GET "api/auth/verify" => 
+router.get("/verify", isAuthenticated, (req, res, next)=> {
+    console.log(req.payload)
+    res.status(200).json({user:req.payload})
+})
 
 
 
