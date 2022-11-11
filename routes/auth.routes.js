@@ -66,13 +66,31 @@ router.post("/login", async(req,res,next)=> {
 
     try{
 
-
-    }catch(error){
-        next(error)
+    const foundUser = await User.findOne({email:email})
+    console.log(foundUser)
+    if(foundUser === null){
+        res.status(400).json({errorMessage: "Wrong email or password"})
+        return;
     }
 
+    const isPasswordValid = await bcrypt.compare(password, foundUser.password)
+    console.log("isPasswordValid", isPasswordValid)
+    if (isPasswordValid === false) {
+      res.status(400).json({errorMessage: "Wrong email or password"})
+      return;      
+    }
+
+    //2. creación de sesión (TOKEN) y enviarlo al cliente
+
     
-    res.status(200).json("todo bien por aquí")
+
+
+}catch(error){
+    next(error)
+}
+
+res.status(200).json("todo bien por aquí")
+    
 })
 
 
