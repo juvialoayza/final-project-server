@@ -28,6 +28,6 @@ const itinerarySchema = new Schema(
 }
 );
 
-const User = model("User", userSchema);
+const Itinerary = model("Itinerary", itinerarySchema);
 
-module.exports = User;
+module.exports = Itinerary;
