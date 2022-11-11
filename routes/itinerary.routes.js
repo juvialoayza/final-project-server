@@ -38,5 +38,15 @@ router.patch("/:itinerayId", async (req, res, next) => {
     }
 })
 
+//DELETE "/:itineraryId" => Ruta para borrar un itinerario de la BD
+router.delete("/:itineraryId", async (req, res, next) => {
+    try {
+      await Itinerary.findByIdAndDelete(req.params.itineraryId)
+      res.status(200).json("Itinerario borrada")
+    } catch(error) {
+        next(error)
+    }
+})
+
 
 module.exports = router;

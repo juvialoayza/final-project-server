@@ -50,6 +50,16 @@ router.patch("/:experienceId", async (req, res, next) => {
     }
 })
 
+//GET "/api/experiences/:experienceId" => Buscar datos de una experiencia en la BD por su id
+router.get("/:experienceId", async (req, res, next) => {
+    try {
+      const response = await Experience.findById(req.params.experienceId)
+      res.status(200).json(response)
+    } catch(error) {
+        next(error)
+    }
+})
+
 //DELETE "/api/experiences/:experienceId" => Borra una experiencia de la BD por su id
 router.delete("/:experienceId", async (req, res, next) => {
     try {
