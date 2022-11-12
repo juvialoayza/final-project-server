@@ -3,6 +3,7 @@ const Experience = require("../models/Experience.model")
 const jwt = require("jsonwebtoken")
 const isAuthenticated = require("../middlewares/auth.middlewares");
 const User = require("../models/User.model");
+const categoryList = require("../utils/categoryList")
 
 
 //GET "/api/experience" => Ruta para obtener todas las experiencias de la BD
