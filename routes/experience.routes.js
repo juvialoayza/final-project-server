@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
 
 //POST "/api/experiences/experienceCreate" => REcibe datos para crear una nueva experiencia en la BD
 router.post("/experienceCreate", async (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
 
     const newExperience = {
         name: req.body.name,
@@ -29,7 +29,7 @@ router.post("/experienceCreate", async (req, res, next) => {
     
     try {
         const response = await Experience.create(newExperience)
-        console.log
+     
         res.status(201).json("new element created in DB")
     } catch(error) {
         next(error)
@@ -77,7 +77,7 @@ router.delete("/:experienceId", async (req, res, next) => {
 //PATCH "/api/experiences/favorites/:experienceId" => Agregar experiencias a la propiedad favoritos del modelo usuario
 router.patch("/favorites/:experienceId", isAuthenticated, async (req, res, next) => {
     try {
-      console.log(req.payload)
+    //   console.log(req.payload)
       await User.findByIdAndUpdate(req.payload._id, {
         $addToSet: {favorites: req.params.experienceId},
       })
@@ -99,18 +99,23 @@ router.delete("/favorites/:experienceId", isAuthenticated, async (req, res, next
   }
 })
 
-//GET "api/experiences/favorites" => Mostrar lista de favoritos del usuario
-router.get("/favorites", isAuthenticated, async (req, res, next) => {
+// //GET "api/experiences/favorites" => Mostrar lista de favoritos del usuario
+// router.get("/my-favorites", isAuthenticated, async (req, res, next) => {
     
-    try {
-      const response = await User.findById(req.payload._id).populate("favorites")
-      console.log(req.payload._id)
-      res.status(200).json(response)
+//     try {
+    
+//       const response = await User.findById(req.payload._id)
+//       console.log(response)
+//       res.status(200).json("Mostrando tu lista de favoritos")
       
-    } catch(error) {
-        next(error)
-    }
-})
+//     } catch(error) {
+//         next(error)
+//     }
+// })
+
+
+
+
 
 
 module.exports = router
