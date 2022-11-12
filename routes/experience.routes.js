@@ -74,8 +74,8 @@ router.delete("/:experienceId", async (req, res, next) => {
     }
 })
 
-//PATCH "/api/experiences/:experienceId" => Agregar experiencias a la propiedad favoritos del modelo usuario
-router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
+//PATCH "/api/experiences/favorites/:experienceId" => Agregar experiencias a la propiedad favoritos del modelo usuario
+router.patch("/favorites/:experienceId", isAuthenticated, async (req, res, next) => {
     try {
       console.log(req.payload)
       await User.findByIdAndUpdate(req.payload._id, {
@@ -87,6 +87,30 @@ router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
     }
 })
 
-//Hacer ruta para remover propiedades de favoritos
+//DELETE "api/experiences/favorites/:experienceId" => Eliminar favoritos del modelo de usuario
+router.delete("/favorites/:experienceId", isAuthenticated, async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.payload._id, {
+        $pull: {favorites: req.params.experienceId},
+    })
+    res.status(200).json("Experiencia borrada de favoritos")
+  }catch(error) {
+    next(error)
+  }
+})
+
+//GET "api/experiences/favorites" => Mostrar lista de favoritos del usuario
+router.get("/favorites", isAuthenticated, async (req, res, next) => {
+    
+    try {
+      const response = await User.findById(req.payload._id).populate("favorites")
+      console.log(req.payload._id)
+      res.status(200).json(response)
+      
+    } catch(error) {
+        next(error)
+    }
+})
+
 
 module.exports = router
