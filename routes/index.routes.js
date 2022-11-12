@@ -11,9 +11,12 @@ router.use("/auth", authRoutes)
 const experienceRoutes = require("./experience.routes")
 router.use("/experiences", experienceRoutes)
 
-// //Places routes
+// Places routes
 // const placesRoutes = require("./places.routes")
 // router.use("/places", placesRoutes)
+
+const profileRoutes = require("./profile.routes")
+router.use("/profile", profileRoutes)
 
 //Itinerary routes
 const itineraryRoutes = require("./itinerary.routes")
