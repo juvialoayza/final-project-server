@@ -4,16 +4,16 @@ router.get("/", (req, res, next) => {
   res.json("All good in here");
 });
 
-//Experiences routes
 const authRoutes = require("./auth.routes")
 router.use("/auth", authRoutes)
 
+//Experiences routes
 const experienceRoutes = require("./experience.routes")
 router.use("/experiences", experienceRoutes)
 
 // Places routes
-// const placesRoutes = require("./places.routes")
-// router.use("/places", placesRoutes)
+const placesRoutes = require("./places.routes")
+router.use("/places", placesRoutes)
 
 const profileRoutes = require("./profile.routes")
 router.use("/profile", profileRoutes)
