@@ -10,7 +10,7 @@ router.get("/my-profile", isAuthenticated, async (req, res, next) => {
         res.status(200).json(response)
 
     } catch (error) {
-        next(error);
+        next(error)
     }
 
 })

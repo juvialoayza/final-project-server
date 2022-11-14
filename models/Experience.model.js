@@ -1,13 +1,14 @@
 const { Schema, model } = require("mongoose");
 const placesList = require("../utils/placesList")
+const categoryList = require("../utils/categoryList")
 
 
 const experienceSchema = new Schema(
     {
         name: String,
         category:{
-            type:String,
-            enum:["Art and Culture", "Food", "Photography", "Adventure", "Entertainment", "Dark Tourist"]
+            type:[String],
+            enum: categoryList
         },
         description: String,
         creator:[
