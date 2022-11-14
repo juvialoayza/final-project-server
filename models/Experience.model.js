@@ -27,6 +27,9 @@ const experienceSchema = new Schema(
             min:0
         },
         date: Date,
+        photoExperience: {
+            type:[String],
+          },
     },
 
 {

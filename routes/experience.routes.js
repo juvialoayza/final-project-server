@@ -17,6 +17,26 @@ router.get("/", async (req, res, next) => {
     }
 })
 
+//GET "/api/experiences/places" => Enviar información al FE sobre lista de lugares pertenecientes el modelo Experience
+router.get("/places", async (req, res, next) => {
+    try {
+      const response = await Experience.find()
+      res.status(200).json("Enviando info de lugares", response.data.place)
+    } catch(error) {
+        next(error)
+    }
+})
+
+
+//GET "/api/experiences/experienceCreate" => Envía datos de lista de lugares al FE
+router.get("/experienceCreate", isAuthenticated, async (req, res, next) => {
+    try {
+        const response = await Experience.find()
+        res.status(200).json("Esta es la respuesta",response, placesList)
+    } catch(error) {
+        next(error)
+    }
+})
 //POST "/api/experiences/experienceCreate" => REcibe datos para crear una nueva experiencia en la BD
 router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
     // console.log(req.body)
@@ -27,7 +47,8 @@ router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
         place: req.body.place,
         price: req.body.price,
         date: req.body.date,
-        creator: req.payload._id
+        creator: req.payload._id, 
+        photoExperience: req.file.path
     }
     
     try {
@@ -47,7 +68,8 @@ router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
         place: req.body.place,
         price: req.body.price,
         date: req.body.date,
-        creator: req.payload._id
+        creator: req.payload._id,
+        photoExperience: req.file.path
     }
 
     try {
@@ -91,7 +113,7 @@ router.patch("/favorites/:experienceId", isAuthenticated, async (req, res, next)
     }
 })
 
-//DELETE "api/experiences/favorites/:experienceId" => Eliminar favoritos del modelo de usuario
+//DELETE "/api/experiences/favorites/:experienceId" => Eliminar favoritos del modelo de usuario
 router.delete("/favorites/:experienceId", isAuthenticated, async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(req.payload._id, {
@@ -116,7 +138,6 @@ router.delete("/favorites/:experienceId", isAuthenticated, async (req, res, next
 //         next(error)
 //     }
 // })
-
 
 
 

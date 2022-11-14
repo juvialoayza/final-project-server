@@ -25,10 +25,6 @@ const userSchema = new Schema(
       type: String
     },
     bioCreator: String,
-    photoExperience: {
-      type:[String],
-    },
-
     favorites: [
       { 
         type: Schema.Types.ObjectId,
