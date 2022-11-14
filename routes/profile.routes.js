@@ -15,8 +15,8 @@ router.get("/my-profile", isAuthenticated, async (req, res, next) => {
 
 })
 
-//PATCH "/api/profile/:userId"
-router.patch("/:userId", isAuthenticated, async (req, res, next) => {
+//PATCH "/api/profile/:userId/edit"
+router.patch("/:userId/edit", isAuthenticated, async (req, res, next) => {
     console.log(req.params.userId)
     const userUpdate = {
         firstName: req.body.firstName,
@@ -30,6 +30,16 @@ router.patch("/:userId", isAuthenticated, async (req, res, next) => {
 
         res.status(200).json("Updated profile")
     } catch (error) {
+        next(error)
+    }
+})
+
+//POST "/api/profile/:userId/delete"
+router.post("/:userId/delete", isAuthenticated, async (req, res, next)=> {
+    try{
+        await User.findByIdAndDelete(req.params.userId)
+        res.status(200).json("Deleted profile")
+    } catch(error) {
         next(error)
     }
 })
