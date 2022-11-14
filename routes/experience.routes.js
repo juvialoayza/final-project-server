@@ -4,12 +4,13 @@ const jwt = require("jsonwebtoken")
 const isAuthenticated = require("../middlewares/auth.middlewares");
 const User = require("../models/User.model");
 const categoryList = require("../utils/categoryList")
+const placesList = require("../utils/placesList")
 
 
-//GET "/api/experience" => Ruta para obtener todas las experiencias de la BD
-router.get("/", async (req, res, next) => {
+//GET "/api/experiences" => Ruta para obtener todas las experiencias de la BD
+router.get("/:name", async (req, res, next) => {
     try {
-        const response = await Experience.find()
+        const response = await Experience.findOne({place: 1})
         res.status(200).json(response)
     } catch(error) {
         next(error)
