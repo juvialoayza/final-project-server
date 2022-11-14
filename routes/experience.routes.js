@@ -8,9 +8,9 @@ const placesList = require("../utils/placesList")
 
 
 //GET "/api/experiences" => Ruta para obtener todas las experiencias de la BD
-router.get("/:name", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
-        const response = await Experience.findOne({place: 1})
+        const response = await Experience.find()
         res.status(200).json(response)
     } catch(error) {
         next(error)
@@ -40,13 +40,14 @@ router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
 })
 
 //PATH "/api/experiences/:experienceId" => Edita una experiencia de la BD por su id
-router.patch("/:experienceId", async (req, res, next) => {
+router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
     const experienceUpdate = {
         name: req.body.name,
         description: req.body.description,
         place: req.body.place,
         price: req.body.price,
-        date: req.body.date
+        date: req.body.date,
+        creator: req.payload._id
     }
 
     try {
