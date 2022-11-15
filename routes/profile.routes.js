@@ -7,6 +7,7 @@ const isAuthenticated  = require ("../middlewares/auth.middlewares");
 router.get("/my-profile", isAuthenticated, async (req, res, next) => {
     try {
         const response = await User.findById(req.payload._id)
+        console.log(response)
         res.status(200).json(response)
 
     } catch (error) {
