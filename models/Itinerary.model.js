@@ -23,7 +23,8 @@ const itinerarySchema = new Schema(
 
 },
 {
-  // this second object adds extra properties: `createdAt` and `updatedAt`    
+  // this second object adds extra properties: `createdAt` and `updatedAt`    s
+  
   timestamps: true
 }
 );
