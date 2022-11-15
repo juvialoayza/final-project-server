@@ -48,7 +48,7 @@ router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
         price: req.body.price,
         date: req.body.date,
         creator: req.payload._id, 
-        photoExperience: req.file.path
+        // photoExperience: req.file.path
     }
     
     try {
