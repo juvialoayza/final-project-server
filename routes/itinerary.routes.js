@@ -1,5 +1,7 @@
 const router = require("express").Router();
+const Experience = require("../models/Experience.model");
 const Itinerary = require("../models/Itinerary.model")
+const isAuthenticated  = require ("../middlewares/auth.middlewares");
 
 //POST "/itinerary" => Ruta para crear nuevo itinerario en la BD
 router.post("/", async (req, res, next) => {
@@ -38,11 +40,27 @@ router.patch("/:itinerayId", async (req, res, next) => {
     }
 })
 
-//DELETE "/:itineraryId" => Ruta para borrar un itinerario de la BD
+//DELETE "/itinerary/:itineraryId" => Ruta para borrar un itinerario de la BD
 router.delete("/:itineraryId", async (req, res, next) => {
     try {
       await Itinerary.findByIdAndDelete(req.params.itineraryId)
       res.status(200).json("Itinerario borrada")
+    } catch(error) {
+        next(error)
+    }
+})
+
+//PATCH "/itinerary/add/:experienceId" => Ruta para agregar una experiencia a un itinerario 
+router.post("/add/:experienceId", isAuthenticated, async (req, res, next) => {
+    const {experienceId} = req.params
+    const {experience} = req.body
+    
+    try {
+    //  const currentExperience = await Experience.findById(experienceId)
+     await Itinerary.create({
+        $addToSet: {experience: experienceId},
+     })
+     res.status(200).json("Experiencia agregada al itinerario")
     } catch(error) {
         next(error)
     }

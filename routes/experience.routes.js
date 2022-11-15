@@ -81,9 +81,9 @@ router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
 })
 
 //GET "/api/experiences/:experienceId" => Buscar y mostrar detalles de una experiencia por su id
-router.get("/:experienceId", async (req, res, next) => {
+router.get("/:experienceId", isAuthenticated, async (req, res, next) => {
     try {
-      const response = await Experience.findById(req.params.experienceId)
+      const response = await Experience.findById(req.params.experienceId).populate("creator")
       res.status(200).json(response)
     } catch(error) {
         next(error)
