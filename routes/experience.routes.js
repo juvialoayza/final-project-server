@@ -31,8 +31,8 @@ router.get("/places", async (req, res, next) => {
 //GET "/api/experiences/experienceCreate" => Envía datos de lista de lugares al FE
 router.get("/experienceCreate", isAuthenticated, async (req, res, next) => {
     try {
-        const response = await Experience.find()
-        res.status(200).json("Esta es la respuesta",response, placesList)
+        // const response = await Experience.find()
+        res.status(200).json("Esta es la respuesta", placesList)
     } catch(error) {
         next(error)
     }
