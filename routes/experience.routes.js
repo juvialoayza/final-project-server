@@ -18,25 +18,28 @@ router.get("/", async (req, res, next) => {
 })
 
 //GET "/api/experiences/places" => Enviar información al FE sobre lista de lugares pertenecientes el modelo Experience
-router.get("/places", async (req, res, next) => {
-    try {
-      const response = await Experience.find()
-      res.status(200).json("Enviando info de lugares", response.data.place)
-    } catch(error) {
-        next(error)
-    }
+router.get("/places", isAuthenticated, (req, res, next) => {
+    // try {
+    //   const response = await Experience.find()
+    //   res.status(200).json("Enviando info de lugares", placesList)
+    // } catch(error) {
+    //     next(error)
+    // }
+    res.status(200).json({
+        placesList
+    })
 })
-
 
 //GET "/api/experiences/experienceCreate" => Envía datos de lista de lugares al FE
 router.get("/experienceCreate", isAuthenticated, async (req, res, next) => {
     try {
-        // const response = await Experience.find()
-        res.status(200).json("Esta es la respuesta", placesList)
+        const response = await Experience.find()
+        res.status(200).json("Esta es la respuesta", response)
     } catch(error) {
         next(error)
     }
 })
+
 //POST "/api/experiences/experienceCreate" => REcibe datos para crear una nueva experiencia en la BD
 router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
     // console.log(req.body)
@@ -47,7 +50,7 @@ router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
         place: req.body.place,
         price: req.body.price,
         date: req.body.date,
-        creator: req.payload._id, 
+        creator: req.payload._id
         // photoExperience: req.file.path
     }
     
