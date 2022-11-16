@@ -5,6 +5,7 @@ const isAuthenticated = require("../middlewares/auth.middlewares");
 const User = require("../models/User.model");
 const categoryList = require("../utils/categoryList")
 const placesList = require("../utils/placesList")
+const uploader = require("../middlewares/cloudinary.js")
 
 
 //GET "/api/experiences" => Ruta para obtener todas las experiencias de la BD
@@ -41,7 +42,7 @@ router.get("/experienceCreate", isAuthenticated, async (req, res, next) => {
 })
 
 //POST "/api/experiences/experienceCreate" => REcibe datos para crear una nueva experiencia en la BD
-router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
+router.post("/experienceCreate", isAuthenticated,uploader.single("image"), async (req, res, next) => {
     // console.log(req.body)
 
     const newExperience = {
@@ -50,8 +51,8 @@ router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
         place: req.body.place,
         price: req.body.price,
         date: req.body.date,
-        creator: req.payload._id
-        // photoExperience: req.file.path
+        creator: req.payload._id,
+        photoExperience:req.body.photoExperience
     }
     
     try {
@@ -63,7 +64,7 @@ router.post("/experienceCreate", isAuthenticated, async (req, res, next) => {
     }
 })
 
-//PATH "/api/experiences/:experienceId" => Edita una experiencia de la BD por su id
+//PATCH "/api/experiences/:experienceId" => Edita una experiencia de la BD por su id
 router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
     const experienceUpdate = {
         name: req.body.name,

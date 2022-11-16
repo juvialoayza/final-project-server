@@ -29,7 +29,7 @@ router.patch("/:itinerayId", async (req, res, next) => {
         experience: req.body.place,
         date: req.body.date,
         budget: req.body.budget,
-        creator: req.body.creator
+        creator: req.payload._id
     }
 
     try {

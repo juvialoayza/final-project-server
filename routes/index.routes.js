@@ -22,8 +22,8 @@ router.use("/profile", profileRoutes)
 const itineraryRoutes = require("./itinerary.routes")
 router.use("/itinerary", itineraryRoutes)
 
-
-
+const uploadRoutes = require("./upload.routes")
+router.use("/upload", uploadRoutes)
 
 
 module.exports = router;
