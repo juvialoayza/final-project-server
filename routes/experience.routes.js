@@ -42,7 +42,7 @@ router.get("/experienceCreate", isAuthenticated, async (req, res, next) => {
 })
 
 //POST "/api/experiences/experienceCreate" => REcibe datos para crear una nueva experiencia en la BD
-router.post("/experienceCreate", isAuthenticated,uploader.single("image"), async (req, res, next) => {
+router.post("/experienceCreate", isAuthenticated, uploader.single("image"), async (req, res, next) => {
     // console.log(req.body)
 
     const newExperience = {
