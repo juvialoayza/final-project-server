@@ -4,14 +4,14 @@ const Itinerary = require("../models/Itinerary.model")
 const isAuthenticated  = require ("../middlewares/auth.middlewares");
 
 //POST "/itinerary" => Ruta para crear nuevo itinerario en la BD
-router.post("/", async (req, res, next) => {
+router.post("/", isAuthenticated, async (req, res, next) => {
     console.log(req.body)
     const newItineray = {
         place: req.body.place,
         experience: req.body.experience,
         date: req.body.date,
         budget: req.body.budget,
-        creator: req.body.creator
+        creator: req.payload._id
     }
 
     try {
