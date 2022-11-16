@@ -19,7 +19,7 @@ router.get("/my-profile", isAuthenticated, async (req, res, next) => {
 
 //PATCH "/api/profile/:userId/edit"
 router.patch("/:userId/edit", isAuthenticated, uploader.single("image"), async (req, res, next) => {
-    console.log(req.params.userId)
+    // console.log(req.params.userId)
     const userUpdate = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -29,7 +29,7 @@ router.patch("/:userId/edit", isAuthenticated, uploader.single("image"), async (
     };
 
     try {
-        await User.findByIdAndUpdate(req.params.userId, userUpdate)
+        await User.findByIdAndUpdate(req.payload._id, userUpdate)
 
         res.status(200).json("Updated profile")
     } catch (error) {

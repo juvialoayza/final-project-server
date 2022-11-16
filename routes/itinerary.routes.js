@@ -8,14 +8,16 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     console.log(req.body)
     const newItineray = {
         place: req.body.place,
-        experience: req.body.experience,
+        // experience: req.body.experience,
         date: req.body.date,
         budget: req.body.budget,
         creator: req.payload._id
     }
 
     try {
-      const response = await Itinerary.create(newItineray)
+      const response = await Itinerary.create(newItineray, {
+        $addToSet: {experience: req.body.experience}
+      })
       res.status(201).json("Itinerario creado en la BD")
     } catch(error) {
         next(error)
