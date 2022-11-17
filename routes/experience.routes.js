@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
     try {
         const response = await Experience.find()
         res.status(200).json(response)
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 })
@@ -36,7 +36,7 @@ router.get("/experienceCreate", isAuthenticated, async (req, res, next) => {
     try {
         const response = await Experience.find()
         res.status(200).json("Esta es la respuesta", response)
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 })
@@ -52,14 +52,14 @@ router.post("/experienceCreate", isAuthenticated, uploader.single("image"), asyn
         price: req.body.price,
         date: req.body.date,
         creator: req.payload._id,
-        photoExperience:req.body.photoExperience
+        photoExperience: req.body.photoExperience
     }
-    
+
     try {
         await Experience.create(newExperience)
      
         res.status(201).json("new element created in DB")
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 })
@@ -79,7 +79,7 @@ router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
     try {
         await Experience.findByIdAndUpdate(req.params.experienceId, experienceUpdate)
         res.status(200).json("Experiencia actualizada")
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 })
@@ -87,9 +87,9 @@ router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
 //GET "/api/experiences/:experienceId" => Buscar y mostrar detalles de una experiencia por su id
 router.get("/:experienceId", isAuthenticated, async (req, res, next) => {
     try {
-      const response = await Experience.findById(req.params.experienceId).populate("creator")
-      res.status(200).json(response)
-    } catch(error) {
+        const response = await Experience.findById(req.params.experienceId).populate("creator")
+        res.status(200).json(response)
+    } catch (error) {
         next(error)
     }
 })
@@ -97,48 +97,45 @@ router.get("/:experienceId", isAuthenticated, async (req, res, next) => {
 //DELETE "/api/experiences/:experienceId" => Borra una experiencia de la BD por su id
 router.delete("/:experienceId", async (req, res, next) => {
     try {
-      await Experience.findByIdAndDelete(req.params.experienceId)
-      res.status(200).json("Experiencia borrada")
-    } catch(error) {
+        await Experience.findByIdAndDelete(req.params.experienceId)
+        res.status(200).json("Experiencia borrada")
+    } catch (error) {
         next(error)
     }
 })
 
-//PATCH "/api/experiences/favorites/:experienceId" => Agregar experiencias a la propiedad favoritos del modelo usuario
-router.patch("/favorites/:experienceId", isAuthenticated, async (req, res, next) => {
+//GET "api/experiences/my-favorites" => Mostrar lista de favoritos del usuario
+router.get("/my-favorites", isAuthenticated, async (req, res, next) => {
+
     try {
-    //   console.log(req.payload)
-      await User.findByIdAndUpdate(req.payload._id, {
-        $addToSet: {favorites: req.params.experienceId},
-      })
-      res.status(200).json("Experiencia agregada a favoritos")
-    } catch(error) {
+        const response = await User.findById(req.payload._id)
+        console.log(response)
+        res.status(200).json(response);
+    } catch (error) {
+        next(error);
+    }
+})
+
+//PATCH "/api/experiences/my-favorites/:experienceId" => Agregar experiencias a la propiedad favoritos del modelo usuario
+router.patch("/my-favorites/:experienceId", isAuthenticated, async (req, res, next) => {
+    try {
+        await User.findByIdAndUpdate(req.payload._id, 
+            { $addToSet: { favorites: req.params.experienceId },
+        })
+        res.status(200).json("Experiencia agregada a favoritos")
+    } catch (error) {
         next(error)
     }
 })
 
 //DELETE "/api/experiences/favorites/:experienceId" => Eliminar favoritos del modelo de usuario
 router.delete("/favorites/:experienceId", isAuthenticated, async (req, res, next) => {
-  try {
-    await User.findByIdAndUpdate(req.payload._id, {
-        $pull: {favorites: req.params.experienceId},
-    })
-    res.status(200).json("Experiencia borrada de favoritos")
-  }catch(error) {
-    next(error)
-  }
-})
-
-//GET "api/experiences/my-favorites" => Mostrar lista de favoritos del usuario
-router.get("/my-favorites", isAuthenticated, async (req, res, next) => {
-    
     try {
-    
-      const response = await User.findById(req.payload._id)
-      console.log(response)
-      res.status(200).json(response.data)
-      
-    } catch(error) {
+        await User.findByIdAndUpdate(req.payload._id, {
+            $pull: { favorites: req.params.experienceId },
+        })
+        res.status(200).json("Experiencia borrada de favoritos")
+    } catch (error) {
         next(error)
     }
 })
@@ -165,6 +162,7 @@ router.get("/:experienceCategory", isAuthenticated, async (req, res, next) => {
 //         categoryList
 //     })
 // })
+
 
 
 module.exports = router
