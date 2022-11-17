@@ -14,7 +14,7 @@ const itinerarySchema = new Schema(
         ref: "Experience",  
         }
     ],
-    date:Date,
+    date: String,
     budget: Number,
     creator:{
         type:Schema.Types.ObjectId,
