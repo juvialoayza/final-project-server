@@ -9,14 +9,13 @@ router.post("/", isAuthenticated, async (req, res, next) => {
     const newItineray = {
         name: req.body.name,
         place: req.body.place,
-        // experience: req.body.experience,
         date: req.body.date,
         budget: req.body.budget,
         creator: req.payload._id
     }
 
     try {
-      const response = await Itinerary.create(newItineray, {
+        await Itinerary.create(newItineray, {
         $addToSet: {experience: req.body.experience}
       })
       res.status(201).json("Itinerario creado en la BD")
@@ -54,21 +53,15 @@ router.delete("/:itineraryId", async (req, res, next) => {
     }
 })
 
-//PATCH "/itinerary/add/:experienceId" => Ruta para agregar una experiencia a un itinerario 
-router.post("/add/:experienceId", isAuthenticated, async (req, res, next) => {
-    const {experienceId} = req.params
-    const {experience} = req.body
-    
-    try {
-    //  const currentExperience = await Experience.findById(experienceId)
-     await Itinerary.create({
-        $addToSet: {experience: experienceId},
-     })
-     res.status(200).json("Experiencia agregada al itinerario")
-    } catch(error) {
-        next(error)
-    }
-})
+
+// //GET "/itinerary/myTrips" => Ruta para mostrar itinerarios creados por el usuario
+// router.get("/myTrips", isAuthenticated, async (req, res, next) => {
+//     try {
+//       const response = await 
+//     }catch(error) {
+//         next(error)
+//     }
+// })
 
 
 module.exports = router;

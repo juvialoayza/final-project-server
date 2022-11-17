@@ -56,7 +56,7 @@ router.post("/experienceCreate", isAuthenticated, uploader.single("image"), asyn
     }
     
     try {
-        const response = await Experience.create(newExperience)
+        await Experience.create(newExperience)
      
         res.status(201).json("new element created in DB")
     } catch(error) {
@@ -158,13 +158,13 @@ router.get("/:experienceCategory", isAuthenticated, async (req, res, next) => {
     })
 
 
-//POST "/api/experiences/categories" => Enviar información al FE sobre lista de categorias pertenecientes al modelo Experience
-router.post("/categories", isAuthenticated, (req, res, next) => {
+// //POST "/api/experiences/categories" => Enviar información al FE sobre lista de categorias pertenecientes al modelo Experience
+// router.post("/categories", isAuthenticated, (req, res, next) => {
   
-    res.status(200).json({
-        categoryList
-    })
-})
+//     res.status(200).json({
+//         categoryList
+//     })
+// })
 
 
 module.exports = router
