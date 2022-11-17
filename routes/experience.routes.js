@@ -129,19 +129,19 @@ router.delete("/favorites/:experienceId", isAuthenticated, async (req, res, next
   }
 })
 
-// //GET "api/experiences/favorites" => Mostrar lista de favoritos del usuario
-// router.get("/my-favorites", isAuthenticated, async (req, res, next) => {
+//GET "api/experiences/my-favorites" => Mostrar lista de favoritos del usuario
+router.get("/my-favorites", isAuthenticated, async (req, res, next) => {
     
-//     try {
+    try {
     
-//       const response = await User.findById(req.payload._id)
-//       console.log(response)
-//       res.status(200).json("Mostrando tu lista de favoritos")
+      const response = await User.findById(req.payload._id)
+      console.log(response)
+      res.status(200).json("Mostrando tu lista de favoritos")
       
-//     } catch(error) {
-//         next(error)
-//     }
-// })
+    } catch(error) {
+        next(error)
+    }
+})
 
 
 
