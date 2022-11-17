@@ -6,17 +6,16 @@ const categoryList = require("../utils/categoryList")
 const experienceSchema = new Schema(
     {
         name: String,
-        category:{
-            type:[String],
+        category: {
+            type: String,
             enum: categoryList
         },
         description: String,
-        creator:[
+        creator:
             {
                 type:Schema.Types.ObjectId,
                 ref: "User",
-            }
-        ],
+            },
         place: {
             type:String,
             enum: placesList
@@ -26,7 +25,7 @@ const experienceSchema = new Schema(
             type: Number,
             min:0
         },
-        date: Date,
+        date: String,
         photoExperience: {
             type:[String],
           },

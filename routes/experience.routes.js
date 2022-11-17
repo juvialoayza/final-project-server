@@ -136,15 +136,35 @@ router.get("/my-favorites", isAuthenticated, async (req, res, next) => {
     
       const response = await User.findById(req.payload._id)
       console.log(response)
-      res.status(200).json("Mostrando tu lista de favoritos")
+      res.status(200).json(response.data)
       
     } catch(error) {
         next(error)
     }
 })
 
+//!Ruta para filtrar por categorias de experiencias
+//GET "api/experiences/categories" 
+router.get("/:experienceCategory", isAuthenticated, async (req, res, next) => {
+    const {experienceCategory} = req.params;
+    try{
+        const response = await Experience.find({category: experienceCategory})
+        console.log(response)
+        res.status(200).json(response)
+    } catch(error) {
+        next(error)
+    }
+   
+    })
 
 
+//POST "/api/experiences/categories" => Enviar información al FE sobre lista de categorias pertenecientes al modelo Experience
+router.post("/categories", isAuthenticated, (req, res, next) => {
+  
+    res.status(200).json({
+        categoryList
+    })
+})
 
 
 module.exports = router

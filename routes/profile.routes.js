@@ -1,8 +1,10 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
 const uploader = require("../middlewares/cloudinary.js")
+const Itinerary = require("../models/Itinerary.model")
 
 const isAuthenticated  = require ("../middlewares/auth.middlewares");
+
 
 //GET "/api/profile/my-profile" 
 router.get("/my-profile", isAuthenticated, async (req, res, next) => {
@@ -25,6 +27,7 @@ router.patch("/:userId/edit", isAuthenticated, uploader.single("image"), async (
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
+        bioCreator: req.body.bioCreator,
         photoUser: req.body.photoUser
     };
 
@@ -45,6 +48,19 @@ router.post("/:userId/delete", isAuthenticated, async (req, res, next)=> {
     } catch(error) {
         next(error)
     }
+})
+
+//GET "/api/profile/my-profile/my-itinerary" 
+router.get("/my-profile/my-itinerary", isAuthenticated, async (req, res, next) => {
+    try {
+        const response = await Itinerary.findById()
+        console.log(response)
+        res.status(200).json(response.data.creator)
+
+    } catch (error) {
+        next(error)
+    }
+
 })
 
 module.exports = router;

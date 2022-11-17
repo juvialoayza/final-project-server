@@ -7,6 +7,7 @@ const isAuthenticated  = require ("../middlewares/auth.middlewares");
 router.post("/", isAuthenticated, async (req, res, next) => {
     console.log(req.body)
     const newItineray = {
+        name: req.body.name,
         place: req.body.place,
         // experience: req.body.experience,
         date: req.body.date,
@@ -27,6 +28,7 @@ router.post("/", isAuthenticated, async (req, res, next) => {
 //PATCH "/:itineraryId" => Ruta para editar un itinerario de la BD
 router.patch("/:itinerayId", async (req, res, next) => {
     const itineraryUpdate = {
+        name: req.body.name,
         place: req.body.place,
         experience: req.body.place,
         date: req.body.date,
