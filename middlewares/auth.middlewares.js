@@ -1,6 +1,7 @@
 const { expressjwt: jwt } = require("express-jwt");
 
 
+
 const isAuthenticated = jwt({
     secret: process.env.TOKEN_SECRET,
     algorithms: ["HS256"],
@@ -26,10 +27,17 @@ const isAuthenticated = jwt({
         return token
         
     }
+
 })
 
+// const isAdmin = (req, res, next) => {
+//     if (req.payload.role === "admin"){
+//         next()
+//     }else{
+//         res.status(403).send(errorMessage,"no tienes acceso")
+//     }
+// }
 
 
-module.exports = isAuthenticated
 
-
+module.exports = isAuthenticated;

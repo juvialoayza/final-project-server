@@ -65,7 +65,7 @@ router.post("/experienceCreate", isAuthenticated, uploader.single("image"), asyn
 })
 
 //PATCH "/api/experiences/:experienceId" => Edita una experiencia de la BD por su id
-router.patch("/:experienceId", isAuthenticated, async (req, res, next) => {
+router.patch("/:experienceId/edit", isAuthenticated, async (req, res, next) => {
     const experienceUpdate = {
         name: req.body.name,
         description: req.body.description,
@@ -95,7 +95,7 @@ router.get("/:experienceId", isAuthenticated, async (req, res, next) => {
 })
 
 //DELETE "/api/experiences/:experienceId" => Borra una experiencia de la BD por su id
-router.delete("/:experienceId", async (req, res, next) => {
+router.delete("/:experienceId",isAuthenticated, async (req, res, next) => {
     try {
         await Experience.findByIdAndDelete(req.params.experienceId)
         res.status(200).json("Experiencia borrada")

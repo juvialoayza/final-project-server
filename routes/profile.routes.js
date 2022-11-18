@@ -3,7 +3,7 @@ const User = require("../models/User.model");
 const uploader = require("../middlewares/cloudinary.js")
 const Itinerary = require("../models/Itinerary.model")
 
-const isAuthenticated  = require ("../middlewares/auth.middlewares");
+const isAuthenticated = require("../middlewares/auth.middlewares");
 const Experience = require("../models/Experience.model");
 
 
@@ -42,11 +42,11 @@ router.patch("/:userId/edit", isAuthenticated, uploader.single("image"), async (
 })
 
 //POST "/api/profile/:userId/delete"
-router.post("/:userId/delete", isAuthenticated, async (req, res, next)=> {
-    try{
+router.post("/:userId/delete", isAuthenticated, async (req, res, next) => {
+    try {
         await User.findByIdAndDelete(req.params.userId)
         res.status(200).json("Deleted profile")
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 })
@@ -54,7 +54,7 @@ router.post("/:userId/delete", isAuthenticated, async (req, res, next)=> {
 //GET "/api/profile/my-profile/my-itinerary" => Mostrar itinerarios creados por el usuario
 router.get("/my-profile/my-itinerary", isAuthenticated, async (req, res, next) => {
     try {
-        const response = await Itinerary.find({creator: req.payload._id}).populate("creator")
+        const response = await Itinerary.find({ creator: req.payload._id }).populate("creator")
         console.log(response)
         res.status(200).json(response)
 
@@ -67,10 +67,10 @@ router.get("/my-profile/my-itinerary", isAuthenticated, async (req, res, next) =
 //GET "/api/profile/my-experiences" => Ruta para mostrar las experiencias que ha creado un usuario Admin
 router.get("/my-experiences", isAuthenticated, async (req, res, next) => {
     try {
-        const response = await Experience.find({creator: req.payload._id})
+        const response = await Experience.find({ creator: req.payload._id })
         console.log(response)
         res.status(200).json(response)
-    }catch(error) {
+    } catch (error) {
         next(error)
     }
 })

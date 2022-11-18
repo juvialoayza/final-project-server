@@ -7,15 +7,12 @@ router.get("/", (req, res, next) => {
 const authRoutes = require("./auth.routes")
 router.use("/auth", authRoutes)
 
-//Experiences routes
 const experienceRoutes = require("./experience.routes")
 router.use("/experiences", experienceRoutes)
-
 
 const profileRoutes = require("./profile.routes")
 router.use("/profile", profileRoutes)
 
-//Itinerary routes
 const itineraryRoutes = require("./itinerary.routes")
 router.use("/itinerary", itineraryRoutes)
 
