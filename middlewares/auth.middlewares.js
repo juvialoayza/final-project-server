@@ -1,7 +1,5 @@
 const { expressjwt: jwt } = require("express-jwt");
 
-
-
 const isAuthenticated = jwt({
     secret: process.env.TOKEN_SECRET,
     algorithms: ["HS256"],
@@ -18,26 +16,27 @@ const isAuthenticated = jwt({
         const tokenType = tokenArr[0]
         const token = tokenArr[1]
 
-        if(tokenType !== "Bearer"){
+        if (tokenType !== "Bearer") {
             console.log("Tipo de token incorrecto")
             return null;
         }
-        
+
         console.log("token recibido")
         return token
-        
     }
-
 })
 
-// const isAdmin = (req, res, next) => {
-//     if (req.payload.role === "admin"){
-//         next()
-//     }else{
-//         res.status(403).send(errorMessage,"no tienes acceso")
-//     }
-// }
+const isAdmin = (req, res, next) => {
+    if (req.payload.role !== "admin") {
+        res.status(401).json("no tienes acceso")
+    } else {
+        next()
+    }
+}
 
 
 
-module.exports = isAuthenticated;
+module.exports = {
+    isAuthenticated,
+    isAdmin
+}

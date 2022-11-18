@@ -3,7 +3,7 @@ const User = require("../models/User.model");
 const uploader = require("../middlewares/cloudinary.js")
 const Itinerary = require("../models/Itinerary.model")
 
-const isAuthenticated = require("../middlewares/auth.middlewares");
+const {isAuthenticated} = require("../middlewares/auth.middlewares");
 const Experience = require("../models/Experience.model");
 
 

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Experience = require("../models/Experience.model");
 const Itinerary = require("../models/Itinerary.model")
-const isAuthenticated = require("../middlewares/auth.middlewares");
+const {isAuthenticated} = require("../middlewares/auth.middlewares");
 
 //POST "/itinerary" => Ruta para crear nuevo itinerario en la BD
 router.post("/", isAuthenticated, async (req, res, next) => {

@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const Experience = require("../models/Experience.model")
-const jwt = require("jsonwebtoken")
-const isAuthenticated = require("../middlewares/auth.middlewares");
+const {isAuthenticated, isAdmin} = require("../middlewares/auth.middlewares");
 const User = require("../models/User.model");
 const categoryList = require("../utils/categoryList")
 const placesList = require("../utils/placesList")
@@ -64,8 +63,18 @@ router.post("/experienceCreate", isAuthenticated, uploader.single("image"), asyn
     }
 })
 
+//GET "/api/experiences/:experienceId" => Buscar y mostrar detalles de una experiencia por su id
+router.get("/:experienceId", isAuthenticated, async (req, res, next) => {
+    try {
+        const response = await Experience.findById(req.params.experienceId).populate("creator")
+        res.status(200).json(response)
+    } catch (error) {
+        next(error)
+    }
+})
+
 //PATCH "/api/experiences/:experienceId" => Edita una experiencia de la BD por su id
-router.patch("/:experienceId/edit", isAuthenticated, async (req, res, next) => {
+router.patch("/:experienceId", isAuthenticated, isAdmin, async (req, res, next) => {
     const experienceUpdate = {
         name: req.body.name,
         description: req.body.description,
@@ -84,15 +93,7 @@ router.patch("/:experienceId/edit", isAuthenticated, async (req, res, next) => {
     }
 })
 
-//GET "/api/experiences/:experienceId" => Buscar y mostrar detalles de una experiencia por su id
-router.get("/:experienceId", isAuthenticated, async (req, res, next) => {
-    try {
-        const response = await Experience.findById(req.params.experienceId).populate("creator")
-        res.status(200).json(response)
-    } catch (error) {
-        next(error)
-    }
-})
+
 
 //DELETE "/api/experiences/:experienceId" => Borra una experiencia de la BD por su id
 router.delete("/:experienceId",isAuthenticated, async (req, res, next) => {

@@ -2,7 +2,7 @@ const router = require("express").Router();
 const User = require('../models/User.model')
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const isAuthenticated = require("../middlewares/auth.middlewares")
+const {isAuthenticated} = require("../middlewares/auth.middlewares")
 
 //POST "/api/auth/signup" => registro de usuario
 router.post("/signup", async (req, res, next) => {
@@ -107,8 +107,5 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
     console.log(req.payload)
     res.status(200).json({ user: req.payload })
 })
-
-
-
 
 module.exports = router;
