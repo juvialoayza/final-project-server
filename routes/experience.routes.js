@@ -64,7 +64,7 @@ router.post("/experienceCreate", isAuthenticated, uploader.single("image"), asyn
 })
 
 //GET "/api/experiences/:experienceId" => Buscar y mostrar detalles de una experiencia por su id
-router.get("/:experienceId", isAuthenticated, async (req, res, next) => {
+router.get("/:experienceId", async (req, res, next) => {
     try {
         const response = await Experience.findById(req.params.experienceId).populate("creator")
         res.status(200).json(response)
@@ -143,7 +143,7 @@ router.delete("/favorites/:experienceId", isAuthenticated, async (req, res, next
 
 //!Ruta para filtrar por categorias de experiencias
 //GET "api/experiences/categories" 
-router.get("/:experienceCategory", isAuthenticated, async (req, res, next) => {
+router.get("/:experienceCategory", async (req, res, next) => {
     const {experienceCategory} = req.params;
     try{
         const response = await Experience.find({category: experienceCategory})
